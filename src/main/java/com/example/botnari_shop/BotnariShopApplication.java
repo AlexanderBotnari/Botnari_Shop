@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BotnariShopApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(BotnariShopApplication.class, args);
     }
 
