@@ -1,4 +1,60 @@
-.nav-list{
-    text-align: center;
+/*heder*/
+.nav-list-buttons{
+    width: 1200px;
+    height: 50px;
+    padding-left: 300px;
 }
-
+.home-icon{
+    width: 50px;
+    height: 50px;
+}
+.nav-item{
+    font-size: 20px;
+    cursor: pointer;
+}
+/*body*/
+.info-titles{
+    text-align: center;
+    color: darkred;
+    font-family: "Great Vibes", cursive;
+    font-size: 165px;
+    line-height: 160px;
+    font-weight: normal;
+    text-shadow: 0 1px 1px #fff;
+}
+.info-subtitle{
+    font-size: 70px;
+}
+.info-container{
+    height: 550px;
+    background-color: burlywood;
+    background-image: url("../images/info-background-photo.jpg");
+}
+/*footer*/
+.footer-description{
+    color: darkred;
+    text-shadow: 0 1px 1px black;
+    font-size: 20px;
+    font-family: "MS Gothic", serif;
+    width: 700px;
+}
+.footer-container{
+    display: flex;
+    font-size: 16px;
+    color: darkred;
+    background-color: antiquewhite;
+}
+.footer-rights{
+    padding-left: 250px;
+    padding-top: 15px;
+}
+.footer-logo-container{
+    width: 100px;
+    height: 80px;
+}
+.footer-logo{
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 90px;
+    height: 70px;
+}
