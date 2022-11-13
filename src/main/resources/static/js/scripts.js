@@ -1,10 +1,14 @@
-$("#file-1").fileinput({
-    theme: 'fa',
-    uploadUrl: '#',
-    allowedFileExtensions: ['jpg', 'png', 'gif'],
-    overwriteInitial: false,
-    maxFilesNum: 10,
-    slugCallback: function (filename) {
-        return filename.replace('(', '_').replace(']', '_');
-    }
+//upload photo
+$(document).ready(() => {
+    $("#photo").change(function () {
+        const file = this.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $("#imgPreview")
+                    .attr("src", event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 });

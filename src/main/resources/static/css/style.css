@@ -1,4 +1,12 @@
-/*heder*/
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+/*home page*/
+/*header*/
 .nav-list-buttons{
     width: 1200px;
     height: 50px;
@@ -30,6 +38,15 @@
     background-color: burlywood;
     background-image: url("../images/info-background-photo.jpg");
 }
+.info-help{
+    font-size: 40px;
+    background-color: darkgray;
+    border-bottom: 1px solid darkred;
+    animation: animation 10s infinite;
+}
+.info-help-text{
+    border-bottom: 2px solid darkred;
+}
 /*footer*/
 .footer-description{
     color: darkred;
@@ -41,8 +58,9 @@
 .footer-container{
     display: flex;
     font-size: 16px;
+    height: 150px;
     color: darkred;
-    background-color: antiquewhite;
+    background-color: darkgray;
 }
 .footer-rights{
     padding-left: 250px;
@@ -58,10 +76,114 @@
     width: 90px;
     height: 70px;
 }
-/*modal upload*/
-.main-section{
-    padding: 20px;
-    margin: 100px auto 0;
-    background-color: #fff;
-    box-shadow: 0 0 20px #c1c1c1;
+/*upload-photo*/
+.holder {
+    height: 300px;
+    width: 300px;
+    border: 2px solid black;
 }
+.upload-img {
+    max-width: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    min-height: 300px;
+}
+.upload-input[type="file"] {
+    margin-top: 5px;
+}
+input::-webkit-file-upload-button{
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .5rem .75rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    border-radius: .25rem;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+}
+input::-webkit-file-upload-button:hover{
+    color: #fff;
+    background-color: blue;
+    border-color: blue;
+}
+
+@keyframes animation {
+    0% {background-color: darkgray;}
+    25%{background-color: aquamarine;}
+    50%{background-color: coral;}
+    75%{background-color: greenyellow;}
+    100% {background-color: darkgray;}
+}
+/*produse page*/
+.cards {
+    padding-left: 100px;
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+}
+.cards-item {
+    display: flex;
+    padding: 1rem;
+}
+.card {
+    max-width: 500px;
+    max-height: 500px;
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.card-content {
+    max-width: 300px;
+    max-height: 300px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 1rem;
+}
+.card-image {
+    max-width: 300px;
+    max-height: 300px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    filter: contrast(70%);
+    overflow: hidden;
+    position: relative;
+    transition: filter 0.5s cubic-bezier(.43, .41, .22, .91);
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.card-text {
+    max-width: 300px;
+    max-height: 300px;
+    flex: 1 1 auto;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+.vizualizeaza-modal-img{
+    max-width: 450px;
+}
+
+/*clienti page*/
