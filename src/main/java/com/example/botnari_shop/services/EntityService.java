@@ -3,10 +3,12 @@ package com.example.botnari_shop.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.botnari_shop.entities.BaseEntity;
 import com.example.botnari_shop.repositories.EntityRepository;
 
+@Service
 public class EntityService<T extends BaseEntity> {
 
 	@Autowired

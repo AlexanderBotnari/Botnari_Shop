@@ -53,17 +53,11 @@
             <artifactId>postgresql</artifactId>
           <scope>runtime</scope>
      </dependency>
-     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
-		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok-maven-plugin</artifactId>
-		    <version>1.18.20.0</version>
-		    <scope>provided</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+     <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
+		    <version>1.18.24</version>
 		    <scope>provided</scope>
 		</dependency>
         

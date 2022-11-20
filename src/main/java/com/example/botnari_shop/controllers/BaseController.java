@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.botnari_shop.entities.BaseEntity;
 import com.example.botnari_shop.responses.JSONResponse;
@@ -20,7 +22,7 @@ public abstract class BaseController<T extends BaseEntity> {
 
 	@Autowired
 	EntityService<T> service;
-
+	 
     @GetMapping("/index")
     public JSONResponse index(){
         return new JSONResponse(ResponseStatus.SUCCES,service.all());
