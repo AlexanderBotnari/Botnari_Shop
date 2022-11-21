@@ -10,11 +10,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class HomeController {
+public class AuthController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login", "error", error);
+    }
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView getLogout(@RequestParam Optional<String> error) {
+        return new ModelAndView("logout", "error", error);
     }
 
 }
