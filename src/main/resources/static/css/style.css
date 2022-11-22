@@ -188,20 +188,17 @@ input::-webkit-file-upload-button:hover{
 /* login page */
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body{
+.login-body{
 background-image: url('https://wallpapercave.com/wp/wp6339579.jpg');
 background-size: cover;
 background-repeat: no-repeat;
-height: 100%;
 font-family: 'Numans', sans-serif;
 }
-
-.container{
-height: 100%;
-align-content: center;
+.login-container{
+    height: 100%;
+    align-content: center;
 }
-
-.card{
+.login-card{
 height: 370px;
 margin-top: auto;
 margin-bottom: auto;
@@ -209,7 +206,7 @@ width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
 
-.card-header h3{
+.login-card-header{
 color: white;
 }
 
@@ -220,25 +217,13 @@ color: black;
 border:0 !important;
 }
 
-input:focus{
+.login-input:focus{
 outline: 0 0 0 0  !important;
 box-shadow: 0 0 0 0 !important;
 
 }
 
-.remember{
-color: white;
-}
-
-.remember input
-{
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
-}
-
-.login_btn{
+.login-btn{
 color: black;
 background-color: #FFC312;
 width: 100px;
@@ -253,7 +238,7 @@ background-color: white;
 color: white;
 }
 
-.links a{
+.links{
 margin-left: 4px;
 }
 /* logout button*/
