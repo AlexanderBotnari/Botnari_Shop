@@ -28,25 +28,25 @@ function serializeJSON (form) {
    return JSON.stringify(pairs, null, 2);
  }
 
- function LoginUser() {
+//function LoginUser() {
    //let form = document.getElementById("login-form");
-   let username = document.getElementById("username")
-   let password = document.getElementById("password")
-   let data = {"username":username,"password":password}
-   console.log(`body json :${data.body}`)
-    const URL = `http://localhost:8080/login`
-   fetch(URL, {
-       method: 'POST',
-       headers: {
-         Accept: 'application/json',
-         'Content-Type': 'application/json'
-       },
-       body: data.body
-      })
-      .then(response => {
-         return response.json()
-      });
- }
+  // let username = document.getElementById("username")
+   //let password = document.getElementById("password")
+   //let data = {"username":username,"password":password}
+  // console.log(`body json :${data.body}`)
+   // const URL = `http://localhost:8080/login`
+  // fetch(URL, {
+    //   method: 'POST',
+     //  headers: {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'application/json'
+      // },
+      // body: data.body
+     // })
+      //.then(response => {
+      //   return response.json()
+     // });
+ //}
 // function createEntity(){
 //    let form = document.getElementById("createForm")
 //    let data = serializeJSON(form)

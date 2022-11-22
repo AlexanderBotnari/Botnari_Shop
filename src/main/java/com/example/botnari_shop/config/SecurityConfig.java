@@ -1,6 +1,8 @@
 package com.example.botnari_shop.config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,9 +21,9 @@ public class SecurityConfig{
             .hasRole("ADMIN")
             .and()
             .formLogin()
-            	.loginPage("/login.html")
+            	.loginPage("/login")
             	.permitAll()
-            	.loginProcessingUrl("/login.html")
+            	.loginProcessingUrl("/login")
                 .defaultSuccessUrl("/html/index.html", true)
                 .and()
                 .logout()
@@ -51,14 +53,11 @@ public class SecurityConfig{
    }
     
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(users.username("admin").password("admin").roles("ADMIN").build());
-        return manager;
-
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin").password("{noop}pass").roles("ADMIN");
     }
 
 }
