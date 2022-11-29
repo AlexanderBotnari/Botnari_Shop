@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.botnari_shop.entities.Category;
 import com.example.botnari_shop.entities.Product;
 import com.example.botnari_shop.entities.finance.Price;
+import com.example.botnari_shop.enums.Category;
 import com.example.botnari_shop.repositories.ProductRepository;
 
 @Service
@@ -36,21 +36,21 @@ public class ProductService {
 		return ref.product;
 	}
 	
-	public Product getProductByPrice(Price price) {
-		var ref = new Object() {
-			Product product = null;
-		};
-		productRepo.findByPrice(price).ifPresent(value -> ref.product = value);
-		return ref.product;
-	}
-	
-	public Product getProductByCategory(Category category) {
-		var ref = new Object() {
-			Product product = null;
-		};
-		productRepo.findByCategory(category).ifPresent(value -> ref.product = value);
-		return ref.product;
-	}
+//	public Product getProductByPrice(Price price) {
+//		var ref = new Object() {
+//			Product product = null;
+//		};
+//		productRepo.findByPrice(price).ifPresent(value -> ref.product = value);
+//		return ref.product;
+//	}
+//	
+//	public Product getProductByCategory(Category category) {
+//		var ref = new Object() {
+//			Product product = null;
+//		};
+//		productRepo.findByCategory(category).ifPresent(value -> ref.product = value);
+//		return ref.product;
+//	}
 	
 	public Product getProductByDescription(String description) {
 		var ref = new Object() {

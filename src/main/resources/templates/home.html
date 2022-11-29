@@ -30,11 +30,11 @@
                 <a class="navbar-brand" href="/">
                     <img class="home-icon" src="../images/favicon.png" alt="HOME">
                 </a>
-
+            </div>
                 <div class="nav-list-buttons">
                     <ul class="navbar-nav ms-auto nav-list">
                         <li class="nav-item">
-                            <a class="nav-link mx-2" data-toggle="modal" data-target="#adaugaModal">Adauga Produs</a>
+                            <a class="nav-link mx-2" href="/add_product">Adauga Produs</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-2" href="/produse">Produse</a>
@@ -77,54 +77,6 @@
            </div>
        </div>
    </div>
-</div>
-
-<div class="modal fade" id="adaugaModal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adaugare Produs Nou</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                        <div class="form-group">
-                            <div class="holder">
-                                <img class="upload-img" id="imgPreview" src="../images/upload-image.png" alt="pic" />
-                            </div>
-                            <input class="upload-input" type="file" name="photograph" id="photo"/>
-                        </div>
-                    <label>
-                        <select class="browser-default custom-select">
-                            <option selected>Alegeti Categorie</option>
-                            <option value="1">Barbati</option>
-                            <option value="2">Femei</option>
-                            <option value="3">Copii</option>
-                        </select>
-                    </label>
-                    <div class="form-group">
-                        <label for="cod" class="col-form-label">Cod</label>
-                        <input type="number" class="form-control" id="cod">
-                    </div>
-                    <div class="form-group">
-                        <label for="pret" class="col-form-label">Pret</label>
-                        <input type="number" class="form-control" id="pret">
-                    </div>
-                    <div class="form-group">
-                        <label for="detalii" class="col-form-label">Detalii Produs</label>
-                        <textarea class="form-control" id="detalii"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
-                <button type="button" class="btn btn-primary">Salveaza</button>
-            </div>
-        </div>
-    </div>
 </div>
 </header>
 

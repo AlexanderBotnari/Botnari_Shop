@@ -2,12 +2,12 @@ package com.example.botnari_shop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.botnari_shop.entities.Product;
-import com.example.botnari_shop.responses.JSONResponse;
-import com.example.botnari_shop.responses.ResponseStatus;
 import com.example.botnari_shop.services.ProductService;
 
 @Controller
@@ -18,6 +18,18 @@ public class ProductController extends BaseController<Product> {
 	
 	@GetMapping("/produse")
 	public String indexProductsPage() {
+		return "produse";
+	}
+	
+	@GetMapping("/add_product")
+	public String indexAddProduct(Model model) {
+		model.addAttribute("product",new Product());
+		return "add_product";
+	}
+	
+	@PostMapping("/add_product")
+	public String addProduct(Product product,Model model) {
+		model.addAttribute("product",product);
 		return "produse";
 	}
 	
