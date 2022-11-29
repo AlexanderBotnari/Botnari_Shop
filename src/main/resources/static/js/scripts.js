@@ -85,25 +85,25 @@ function serializeJSON (form) {
 
 // }
 
-function getEntity(id){
-   const URL = `http://localhost:8888/posts/${id}`
-    fetch(URL)
-              .then((res) => {
-                 return res.json()
-              })
-              .then((res) => {
+// function getEntity(id){
+//    const URL = `http://localhost:8888/posts/${id}`
+//     fetch(URL)
+//               .then((res) => {
+//                  return res.json()
+//               })
+//               .then((res) => {
 
-               let title = document.getElementById("updateInputTitle")
-               let body = document.getElementById("updateInputBody")
+//                let title = document.getElementById("updateInputTitle")
+//                let body = document.getElementById("updateInputBody")
 
-               title.value = res.data.title
-               body.value = res.data.body
+//                title.value = res.data.title
+//                body.value = res.data.body
 
-            })
-              .catch(showError)
+//             })
+//               .catch(showError)
 
 
-}
+// }
 
 // function updateEntity(){
    

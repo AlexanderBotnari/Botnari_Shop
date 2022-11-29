@@ -9,7 +9,12 @@ public class AuthController {
 
 	@GetMapping("/login")
     public String login() {
-        return "login";
+        return "index";
+    }
+	
+	@GetMapping("/")
+    public String getHome() {
+        return "home";
     }
 	
 	@GetMapping("/logout")

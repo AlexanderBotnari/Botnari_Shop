@@ -37,7 +37,7 @@ public class SecurityConfig{
         
         http 
             .authorizeRequests()
-            .antMatchers("/produse","/")
+            .antMatchers("/js/**","/html/**","/","/produse","/clienti")
             .hasRole("ADMIN")
             .and();
         
@@ -48,7 +48,7 @@ public class SecurityConfig{
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("ADMIN");
+                .withUser("admin").password("{noop}Vi449047").roles("ADMIN");
     }
 
 }
