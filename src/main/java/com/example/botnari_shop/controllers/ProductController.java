@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.botnari_shop.entities.Product;
+import com.example.botnari_shop.entities.finance.Price;
+import com.example.botnari_shop.enums.Category;
+import com.example.botnari_shop.enums.Currency;
 import com.example.botnari_shop.services.ProductService;
 
 @Controller
-public class ProductController extends BaseController<Product> {
+public class ProductController {//extends BaseController<Product>
 	
 	@Autowired
 	ProductService productService;
@@ -21,17 +24,28 @@ public class ProductController extends BaseController<Product> {
 		return "produse";
 	}
 	
-	@GetMapping("/add_product")
-	public String indexAddProduct(Model model) {
+	@GetMapping("/")
+    public String indexHome(Model model) {
 		model.addAttribute("product",new Product());
-		return "add_product";
+		model.addAttribute("price",new Price());
+        return "home";
+    }
+	
+	@PostMapping("/")
+	public String addProduct(@ModelAttribute Product product,@ModelAttribute Price price,Model model) {
+		System.out.println("Post work!");
+		String code = product.getCode();
+		String description = product.getDescription();
+		byte[] image = product.getImage();
+		Category category = product.getCategory();
+    	Double ammount = price.getAmmount();
+		Currency currency = price.getCurrency();
+    	
+		System.out.println(code+" "+description+" "+image+" "+category+" "+ammount+" "+currency);
+		model.addAttribute("product",product);
+		return "succes_add_product";
 	}
 	
-	@PostMapping("/add_product")
-	public String addProduct(Product product,Model model) {
-		model.addAttribute("product",product);
-		return "produse";
-	}
 	
 //	@GetMapping("/index/code/{code}")
 //	public JSONResponse indexByCode(@PathVariable String code) {

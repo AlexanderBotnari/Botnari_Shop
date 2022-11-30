@@ -37,7 +37,7 @@ public class SecurityConfig{
         
         http 
             .authorizeRequests()
-            .antMatchers("/js/**","/html/**","/","/produse","/clienti")
+            .antMatchers("/js/**","/html/**","/","/produse","/clienti","/succes_add_product")
             .hasRole("ADMIN")
             .and();
         

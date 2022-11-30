@@ -11,11 +11,6 @@ public class AuthController {
         return "index";
     }
 	
-	@GetMapping("/")
-    public String getHome() {
-        return "home";
-    }
-	
 	@GetMapping("/logout")
     public String getLogout() {
         return "logout";
