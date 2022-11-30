@@ -14,7 +14,7 @@ import com.example.botnari_shop.enums.Currency;
 import com.example.botnari_shop.services.ProductService;
 
 @Controller
-public class ProductController {//extends BaseController<Product>
+public class ProductController extends BaseController<Product>{
 	
 	@Autowired
 	ProductService productService;
@@ -33,15 +33,17 @@ public class ProductController {//extends BaseController<Product>
 	
 	@PostMapping("/")
 	public String addProduct(@ModelAttribute Product product,@ModelAttribute Price price,Model model) {
-		System.out.println("Post work!");
-		String code = product.getCode();
-		String description = product.getDescription();
 		byte[] image = product.getImage();
 		Category category = product.getCategory();
+		String code = product.getCode();
     	Double ammount = price.getAmmount();
 		Currency currency = price.getCurrency();
+		String description = product.getDescription();
+		
+		Product p = new Product(image,category,code,new Price(ammount,currency),description);
     	
-		System.out.println(code+" "+description+" "+image+" "+category+" "+ammount+" "+currency);
+		productService.saveProduct(p);
+//		System.out.println(code+" "+description+" "+image+" "+category+" "+ammount+" "+currency);
 		model.addAttribute("product",product);
 		return "succes_add_product";
 	}

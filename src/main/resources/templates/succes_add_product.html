@@ -113,10 +113,22 @@ aria-labelledby="logoutModalLabel" aria-hidden="true">
                 <label for="cod" class="col-form-label">Cod</label>
                 <input type="number" class="form-control" id="cod" name="code">
             </div>
+
+            <div class="price-container" th:object="${price}">
             <div class="form-group">
                 <label for="pret" class="col-form-label">Pret</label>
-                <input type="number" class="form-control" id="pret" name="price">
+                <input type="number" class="form-control" id="pret" name="ammount">
             </div>
+            <label>
+                <select class="browser-default custom-select" name="currency">
+                    <option value="">Selecteaza Valuta</option>
+                    <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
+                            th:text="${v}"
+                            th:value="${v}"/>
+                </select>
+            </label>
+            </div>
+            
             <div class="form-group">
                 <label for="detalii" class="col-form-label">Detalii Produs</label>
                 <textarea class="form-control" id="detalii" name="description"></textarea>
@@ -129,6 +141,11 @@ aria-labelledby="logoutModalLabel" aria-hidden="true">
            </div>
        </div>
    </div>
+</div>
+
+<div class="message">
+    <p th:text="${product}" style="text-align: center; color:green;"></p>
+    <p style="text-align: center; color:green;"> a fost adaugat cu succes</p>
 </div>
 
 </body>

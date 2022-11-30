@@ -1,28 +1,40 @@
 package com.example.botnari_shop.entities.finance;
 
-import javax.persistence.CollectionTable;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Enumerated;
+
 import com.example.botnari_shop.entities.BaseEntity;
 import com.example.botnari_shop.enums.Currency;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 @Entity(name = "prices")
-public class Price{//extends BaseEntity
+public class Price extends BaseEntity{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 	private Double ammount;
-	@CollectionTable
+	
+	@Enumerated
+	@Column(name = "currency")
 	private Currency currency;
+	
+	public Price(int id, LocalDateTime created, LocalDateTime updated, LocalDateTime deleted, String type,
+			Double ammount, Currency currency) {
+		super(id, created, updated, deleted, type);
+		this.ammount = ammount;
+		this.currency = currency;
+	}
+	
 	
 }
