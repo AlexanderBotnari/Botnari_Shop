@@ -29,7 +29,7 @@ public abstract class BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@CreationTimestamp
 	private LocalDateTime created;

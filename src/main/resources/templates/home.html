@@ -98,16 +98,16 @@
                     <input class="upload-input" type="file" name="image" id="photo"/>
                 </div>
             <label>
-                <select class="browser-default custom-select" name="category">
-                    <option value="">Selecteaza Categoria</option>
+                <select class="browser-default custom-select" name="category" required>
+                    <option value="">Selecteaza Categoria^</option>
                     <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
                             th:text="${c}"
                             th:value="${c}"/>
                 </select>
             </label>
             <div class="form-group">
-                <label for="cod" class="col-form-label">Cod</label>
-                <input type="number" class="form-control" id="cod" name="code">
+                <label for="cod" class="col-form-label">Cod^</label>
+                <input type="number" class="form-control" id="cod" name="code" required>
             </div>
 
             <div class="price-container" th:object="${price}">

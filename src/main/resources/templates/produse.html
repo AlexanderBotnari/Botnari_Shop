@@ -104,18 +104,18 @@
                         </div>
                         <input class="upload-input" type="file" name="image" id="photo"/>
                     </div>
-                <label>
-                    <select class="browser-default custom-select" name="category">
-                        <option value="">Selecteaza Categoria</option>
-                        <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
-                                th:text="${c}"
-                                th:value="${c}"/>
-                    </select>
-                </label>
-                <div class="form-group">
-                    <label for="cod" class="col-form-label">Cod</label>
-                    <input type="number" class="form-control" id="cod" name="code">
-                </div>
+                    <label>
+                        <select class="browser-default custom-select" name="category" required>
+                            <option value="">Selecteaza Categoria^</option>
+                            <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
+                                    th:text="${c}"
+                                    th:value="${c}"/>
+                        </select>
+                    </label>
+                    <div class="form-group">
+                        <label for="cod" class="col-form-label">Cod^</label>
+                        <input type="number" class="form-control" id="cod" name="code" required>
+                    </div>
     
                 <div class="price-container" th:object="${price}">
                 <div class="form-group">
@@ -169,19 +169,13 @@
 <main>
     <ul class="cards">
         <li class="cards-item">
-            <div class="card">
-                <img src="../images/IT.png" class="card-image" alt="pic">
+            <div class="card" th:each=" product : ${products}">
+                <img class="card-image"  th:src="${'data:image/png;charset=utf-8;base64,' + images.get(product.id)}">
                 <div class="card-content">
-                    <div class="card-title">Cod Produs</div>
-                    <p class="card-text">
-                        Detalii produs
-                    </p>
-                    <p class="card-category">
-                        Categorie
-                    </p>
-                    <p class="card-category">
-                        Pret $
-                    </p>
+                    <div class="card-title" th:text="${product.code}"></div>
+                    <p class="card-text" th:text="${product.description}"></p>
+                    <p class="card-category" th:text="${product.category}"></p>
+                    <!-- <p class="card-category" th:text="${product.price}"></p> -->
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adaugaModal">Editeaza</button>

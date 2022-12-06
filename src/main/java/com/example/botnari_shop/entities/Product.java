@@ -1,13 +1,11 @@
 package com.example.botnari_shop.entities;
 
-import java.util.Arrays;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-
 import com.example.botnari_shop.entities.finance.Price;
 import com.example.botnari_shop.enums.Category;
 
@@ -23,6 +21,7 @@ import lombok.Setter;
 @Entity(name = "products")
 public class Product extends BaseEntity{
 
+	
 	private byte[] image;
 	@Enumerated
 	@Column(name = "category")
@@ -34,8 +33,7 @@ public class Product extends BaseEntity{
 
 	@Override
 	public String toString() {
-		return "Product [ category=" + category + ", code=" + code + 
-				", description=" + description + "]";
+		return "Produsul " + code;
 	}
 	
 	
