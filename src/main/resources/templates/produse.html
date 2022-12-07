@@ -169,9 +169,9 @@
 <main>
     <ul class="cards">
         <li class="cards-item">
-            <div class="card" th:each=" product : ${products}">
-                <img class="card-image"  th:src="${'data:image/png;charset=utf-8;base64,' + images.get(product.id)}">
+            <div class="card" th:each="product : ${products}">
                 <div class="card-content">
+                    <img class="card-image" th:src="@{'product/image/' + ${product.id}}" alt="image">
                     <div class="card-title" th:text="${product.code}"></div>
                     <p class="card-text" th:text="${product.description}"></p>
                     <p class="card-category" th:text="${product.category}"></p>

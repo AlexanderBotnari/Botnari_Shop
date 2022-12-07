@@ -1,5 +1,7 @@
 package com.example.botnari_shop.entities;
 
+import java.sql.Blob;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Entity(name = "products")
 public class Product extends BaseEntity{
 
-	
+	@Lob
 	private byte[] image;
 	@Enumerated
 	@Column(name = "category")

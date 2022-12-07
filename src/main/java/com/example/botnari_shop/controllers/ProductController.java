@@ -3,14 +3,12 @@ package com.example.botnari_shop.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
-import java.util.HashMap;
+import java.sql.Blob;
 import java.util.List;
-import java.util.Map;
 
-import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,40 +18,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.botnari_shop.entities.Product;
 import com.example.botnari_shop.entities.finance.Price;
 import com.example.botnari_shop.enums.Category;
 import com.example.botnari_shop.enums.Currency;
 import com.example.botnari_shop.services.ProductService;
-import com.example.botnari_shop.utils.ImageUtil;
-
 @Controller
 public class ProductController extends BaseController<Product>{
 	
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/produse")
+	@GetMapping(value = "/produse", produces = MediaType.IMAGE_PNG_VALUE)
 	public String indexProductsPage(Model model) {
-		Map<Integer, String> productBase64Images = new HashMap<>();
-		List<Product> products = productService.getProducts();
-		
-		for(Product product: products){               
-            productBase64Images.put(product.getId(), Base64.getEncoder().encodeToString(product.getImage()));
-        }
-		 model.addAttribute("images", productBase64Images);
+   		 List<Product> products = productService.getProducts();
 		 model.addAttribute("products",products);
 		return "produse";
 	}
 	
-	@GetMapping(value = "/produse/image/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping("/product/image/{id}")
 	public void showProductImage(@PathVariable Integer id,
 	                               HttpServletResponse response) throws IOException {
 	response.setContentType("image/png"); // Or whatever format you wanna use
-    
+
 	Product product = productService.getProductById(id);
-	Base64.getEncoder().encodeToString(product.getImage());
+
+	InputStream is = new ByteArrayInputStream(product.getImage());
+	IOUtils.copy(is, response.getOutputStream());
 	}
 
 	
@@ -65,7 +58,12 @@ public class ProductController extends BaseController<Product>{
     }
 	
 	@PostMapping("/")
-	public String addProduct(@ModelAttribute Product product,@ModelAttribute Price price,Model model) {
+	public String addProduct(@ModelAttribute Product product,
+			                 @ModelAttribute Price price,
+			                 Model model) throws IOException {
+//		String imageName = StringUtils.cleanPath(image.getOriginalFilename());
+//		String imageFile = Base64.getEncoder().encodeToString(product.getImage().getBytes());
+		
 		byte[] image = product.getImage();
 		Category category = product.getCategory();
 		String code = product.getCode();
@@ -79,6 +77,7 @@ public class ProductController extends BaseController<Product>{
 				Product p = new Product(image,category,code,new Price(ammount,currency),description);
 				productService.saveProduct(p);
 				model.addAttribute("product",product);
+				model.addAttribute("image",image);
 				return "succes_page";
 				
 		}catch(Exception e) {
