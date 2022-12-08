@@ -1,7 +1,4 @@
 package com.example.botnari_shop.entities;
-
-import java.sql.Blob;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Entity(name = "products")
 public class Product extends BaseEntity{
-
+	
 	@Lob
 	private byte[] image;
 	@Enumerated
@@ -32,11 +29,10 @@ public class Product extends BaseEntity{
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Price price;
 	private String description;
-
+	
 	@Override
 	public String toString() {
 		return "Produsul " + code;
 	}
-	
-	
+
 }

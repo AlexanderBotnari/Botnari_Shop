@@ -6,9 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.botnari_shop.entities.Product;
-import com.example.botnari_shop.entities.finance.Price;
-import com.example.botnari_shop.enums.Category;
-
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer>{
 

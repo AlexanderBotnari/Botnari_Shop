@@ -8,9 +8,10 @@ html, body {
 /*home page*/
 /*header*/
 .nav-list-buttons{
-    width: 1200px;
+    max-width: 800px;
+    min-width: 790px;
     height: 50px;
-    padding-left: 300px;
+    padding-left: 150px;
 }
 .home-icon{
     width: 50px;
@@ -126,36 +127,43 @@ input::-webkit-file-upload-button:hover{
 }
 /*produse page*/
 .cards {
-    padding-left: 100px;
     display: flex;
     text-align: center;
+    flex-direction: row;
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
+    padding-right: 40px;
 }
 .cards-item {
     display: flex;
+    flex-wrap: wrap;
+    align-content: center;
     padding: 1rem;
 }
 .card {
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 1080px;
+    max-height: 720px;
     background-color: white;
     border-radius: 0.25rem;
     box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 .card-content {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 1080px;
+    max-height: 720px;
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
     padding: 1rem;
 }
 .card-image {
+    min-width: 300px;
+    min-height: 300px;
     max-width: 300px;
     max-height: 300px;
     background-position: center center;
@@ -245,4 +253,3 @@ margin-left: 4px;
 .logout-button{
     padding-left: 20px;
 }
-

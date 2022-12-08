@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.botnari_shop.entities.Product;
-import com.example.botnari_shop.entities.finance.Price;
-import com.example.botnari_shop.enums.Category;
 import com.example.botnari_shop.repositories.ProductRepository;
 
 @Service

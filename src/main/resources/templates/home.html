@@ -90,33 +90,33 @@
                </button>
            </div>
            <div class="modal-body">
-            <form th:method="POST" th:action="@{/}" th:object="${product}">
+            <form th:method="POST" th:action="@{/}" th:object="${product}" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="holder">
                         <img class="upload-img" id="imgPreview" src="../images/upload-image.png" alt="pic" />
                     </div>
-                    <input class="upload-input" type="file" name="image" id="photo"/>
+                    <input class="upload-input" type="file" name="image" id="photo" accept="image/x-png,image/jpeg,image/jpg" required/>
                 </div>
             <label>
                 <select class="browser-default custom-select" name="category" required>
-                    <option value="">Selecteaza Categoria^</option>
+                    <option value="">Selecteaza Categoria</option>
                     <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
                             th:text="${c}"
                             th:value="${c}"/>
                 </select>
             </label>
             <div class="form-group">
-                <label for="cod" class="col-form-label">Cod^</label>
+                <label for="cod" class="col-form-label">Cod</label>
                 <input type="number" class="form-control" id="cod" name="code" required>
             </div>
 
             <div class="price-container" th:object="${price}">
             <div class="form-group">
                 <label for="pret" class="col-form-label">Pret</label>
-                <input type="number" class="form-control" id="pret" name="ammount">
+                <input type="number" class="form-control" id="pret" name="ammount" required>
             </div>
             <label>
-                <select class="browser-default custom-select" name="currency">
+                <select class="browser-default custom-select" name="currency" required>
                     <option value="">Selecteaza Valuta</option>
                     <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
                             th:text="${v}"
@@ -127,7 +127,7 @@
             
             <div class="form-group">
                 <label for="detalii" class="col-form-label">Detalii Produs</label>
-                <textarea class="form-control" id="detalii" name="description"></textarea>
+                <textarea class="form-control" id="detalii" name="description" required></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>

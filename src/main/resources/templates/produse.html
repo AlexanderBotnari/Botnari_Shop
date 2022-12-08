@@ -47,8 +47,8 @@
                 </ul>
             </div>
         </div>
-        <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Cautare" aria-label="Search">
+        <form class="d-flex nav-search-component" role="search">
+            <input class="form-control me-2 search-text" type="search" placeholder="Cod produs" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Cauta</button>
         </form>
                 <!-- Logout Button -->
@@ -97,33 +97,33 @@
                    </button>
                </div>
                <div class="modal-body">
-                <form th:method="POST" th:action="@{/}" th:object="${product}">
+                <form th:method="POST" th:action="@{/}" th:object="${product}" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="holder">
                             <img class="upload-img" id="imgPreview" src="../images/upload-image.png" alt="pic" />
                         </div>
-                        <input class="upload-input" type="file" name="image" id="photo"/>
+                        <input class="upload-input" type="file" name="image" id="photo" accept="image/x-png,image/jpeg,image/jpg" required/>
                     </div>
-                    <label>
-                        <select class="browser-default custom-select" name="category" required>
-                            <option value="">Selecteaza Categoria^</option>
-                            <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
-                                    th:text="${c}"
-                                    th:value="${c}"/>
-                        </select>
-                    </label>
-                    <div class="form-group">
-                        <label for="cod" class="col-form-label">Cod^</label>
-                        <input type="number" class="form-control" id="cod" name="code" required>
-                    </div>
+                <label>
+                    <select class="browser-default custom-select" name="category" required>
+                        <option value="">Selecteaza Categoria</option>
+                        <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
+                                th:text="${c}"
+                                th:value="${c}"/>
+                    </select>
+                </label>
+                <div class="form-group">
+                    <label for="cod" class="col-form-label">Cod</label>
+                    <input type="number" class="form-control" id="cod" name="code" required>
+                </div>
     
                 <div class="price-container" th:object="${price}">
                 <div class="form-group">
                     <label for="pret" class="col-form-label">Pret</label>
-                    <input type="number" class="form-control" id="pret" name="ammount">
+                    <input type="number" class="form-control" id="pret" name="ammount" required>
                 </div>
                 <label>
-                    <select class="browser-default custom-select" name="currency">
+                    <select class="browser-default custom-select" name="currency" required>
                         <option value="">Selecteaza Valuta</option>
                         <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
                                 th:text="${v}"
@@ -134,7 +134,7 @@
                 
                 <div class="form-group">
                     <label for="detalii" class="col-form-label">Detalii Produs</label>
-                    <textarea class="form-control" id="detalii" name="description"></textarea>
+                    <textarea class="form-control" id="detalii" name="description" required></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
@@ -144,26 +144,6 @@
                </div>
            </div>
        </div>
-    </div>
-
-    <div class="modal fade" id="vizualizeazaModal" tabindex="-1" role="dialog"
-         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="vizualizezaModalLabel">Vizualizare</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <img src="../images/IT.png" class="vizualizeaza-modal-img" alt="pic">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
-                </div>
-            </div>
-        </div>
     </div>
 </header>
 <main>
@@ -175,16 +155,38 @@
                     <div class="card-title" th:text="${product.code}"></div>
                     <p class="card-text" th:text="${product.description}"></p>
                     <p class="card-category" th:text="${product.category}"></p>
-                    <!-- <p class="card-category" th:text="${product.price}"></p> -->
+                    <p class="card-category" th:text="${product.price.ammount} +' '+ ${product.price.currency}"></p>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adaugaModal">Editeaza</button>
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#vizualizeazaModal">Vizualizeaza</button>
+                        <button class="btn btn-success" data-toggle="modal" data-row="${product}" th:attr="data-target='#vizualizeazaModal'+${product.id}">Vizualizeaza</button> 
                     </div>
                 </div>
+                <!-- Show modal -->
+                <div th:fragment="modal"  th:id="vizualizeazaModal+${product.id}" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                     <h5 class="modal-title" id="vizualizezaModalLabel">Vizualizare</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                 <span aria-hidden="true">&times;</span>
+                                            </button>
+                            </div>
+                                 <div class="modal-body">
+                                        <img th:src="@{'product/image/' + ${product.id}}" class="vizualizeaza-modal-img" alt="pic">
+                                 </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <!-- Show Modal -->
             </div>
         </li>
     </ul>
+    
     <div class="modal fade" id="stergeModal" tabindex="-1" role="dialog"
          aria-labelledby="stergeModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -225,6 +227,7 @@
             </div>
         </div>
     </div>
+
 </main>
 </body>
 </html>
