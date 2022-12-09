@@ -97,12 +97,16 @@
                    </button>
                </div>
                <div class="modal-body">
-                <form th:method="POST" th:action="@{/}" th:object="${product}" enctype="multipart/form-data">
+                <form th:method="POST" th:action="@{/produse}" th:object="${product}" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="holder">
                             <img class="upload-img" id="imgPreview" src="../images/upload-image.png" alt="pic" />
                         </div>
                         <input class="upload-input" type="file" name="image" id="photo" accept="image/x-png,image/jpeg,image/jpg" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="productName" class="col-form-label">Nume Produs</label>
+                        <input type="number" class="form-control" id="productName" name="productName" required>
                     </div>
                 <label>
                     <select class="browser-default custom-select" name="category" required>

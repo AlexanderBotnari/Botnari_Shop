@@ -11,7 +11,7 @@ import com.example.botnari_shop.enums.ClientStatus;
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Integer>{
 
-	public Optional<Client> findByName(String name);
+	public Optional<Client> findByFirstNameAndLastName(String firstName, String lastName);
 	public Optional<Client> findByEmail(String email);
 	public Optional<Client> findByStatus(ClientStatus status);
 	public Optional<Client> findByPhone(String phone);

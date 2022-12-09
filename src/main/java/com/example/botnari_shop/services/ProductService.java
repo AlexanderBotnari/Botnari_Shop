@@ -1,10 +1,12 @@
 package com.example.botnari_shop.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.botnari_shop.entities.Client;
 import com.example.botnari_shop.entities.Product;
 import com.example.botnari_shop.repositories.ProductRepository;
 
@@ -57,6 +59,14 @@ public class ProductService {
 		productRepo.findByDescription(description).ifPresent(value -> ref.product = value);
 		return ref.product;
 	}
+	
+//	public List<Product> getProductsByClientPhone(String phone){
+//		var ref = new Object() {
+//			List<Product> products = null;
+//		};
+//		productRepo.findByClientPhone(phone).ifPresent(value -> ref.products = value);;
+//		return ref.products;
+//	}
 	
 	public void deleteProductByCode(String code) {
 		productRepo.deleteProductByCode(code);

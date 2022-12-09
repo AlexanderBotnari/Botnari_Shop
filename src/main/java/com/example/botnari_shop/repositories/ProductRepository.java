@@ -14,4 +14,5 @@ public interface ProductRepository extends JpaRepository<Product,Integer>{
 //	public Optional<Product> findByCategory(Category category);
 	public Optional<Product> findByDescription(String description);
 	public void deleteProductByCode(String code);
+//	public Optional<List<Product>> findByClientPhone(String phone);
 }

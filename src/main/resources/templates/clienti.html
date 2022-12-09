@@ -75,12 +75,16 @@
                </button>
            </div>
            <div class="modal-body">
-            <form th:method="POST" th:action="@{/}" th:object="${product}" enctype="multipart/form-data">
+            <form th:method="POST" th:action="@{/clienti}" th:object="${product}" enctype="multipart/form-data">
                 <div class="form-group">
                     <div class="holder">
                         <img class="upload-img" id="imgPreview" src="../images/upload-image.png" alt="pic" />
                     </div>
                     <input class="upload-input" type="file" name="image" id="photo" accept="image/x-png,image/jpeg,image/jpg" required/>
+                </div>
+                <div class="form-group">
+                    <label for="productName" class="col-form-label">Nume Produs</label>
+                    <input type="number" class="form-control" id="productName" name="productName" required>
                 </div>
             <label>
                 <select class="browser-default custom-select" name="category" required>
@@ -126,7 +130,9 @@
 
 </header>
 <main>
+
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adaugaClientModal">+ Adauga Client</button>
+    
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
         <tr>
@@ -141,89 +147,29 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><p>1</p></td>
+        <tr th:each="client : ${clients}">
+            <td><p th:text="${client.id}"></p></td>
             <td>
                 <div class="d-flex align-items-center">
                     <div class="ms-3">
-                        <p class="fw-bold mb-1">John Doe</p>
-                        <p class="text-muted mb-0">john.doe@gmail.com</p>
+                        <p class="fw-bold mb-1" th:text="${client.firstName} + ' ' + ${client.lastName}"></p>
+                        <p class="text-muted mb-0" th:text="${client.email}"></p>
                     </div>
                 </div>
             </td>
-            <td>
-                <p class="fw-normal mb-1">27172</p>
-                <p class="text-muted mb-0">Pulover</p>
+            <!-- <td>
+                <p class="fw-normal mb-1" th:text="${client.product.code}"></p>
+                <p class="text-muted mb-0" th:text="${client.product.productName}"></p>
             </td>
             <td>
-            	<p class="fw-normal mb-1">400</p>
-                <p class="text-muted mb-0">Lei</p>
-            </td>
+            	<p class="fw-normal mb-1" th:text="${client.price.ammount}"></p>
+                <p class="text-muted mb-0" th:text="${client.price.currency}"></p>
+            </td> -->
             <td>
-                <span class="badge badge-success rounded-pill d-inline">Achitat</span>
+                <span class="badge badge-success rounded-pill d-inline" th:text="${client.status}"></span>
             </td>
-            <td>68327374</td>
-            <td>30.11.2021</td>
-            <td>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">Editeaza</button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td><p>2</p></td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <div class="ms-3">
-                        <p class="fw-bold mb-1">Alex Ray</p>
-                        <p class="text-muted mb-0">alex.ray@gmail.com</p>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <p class="fw-normal mb-1">87181</p>
-                <p class="text-muted mb-0">Pantaloni Jeans</p>
-            </td>
-            <td>
-            	<p class="fw-normal mb-1">40</p>
-                <p class="text-muted mb-0">EUR</p>
-            </td>
-            <td>
-                <span class="badge badge-success rounded-pill d-inline">Achitat</span>
-            </td>
-            <td>7845631</td>
-            <td>18.09.2022</td>
-            <td>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">Editeaza</button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td><p>3</p></td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <div class="ms-3">
-                        <p class="fw-bold mb-1">Kate Hunington</p>
-                        <p class="text-muted mb-0">kate.hunington@gmail.com</p>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <p class="fw-normal mb-1">476828</p>
-                <p class="text-muted mb-0">Geaca</p>
-            </td>
-            <td>
-            	<p class="fw-normal mb-1">300</p>
-                <p class="text-muted mb-0">USD</p>
-            </td>
-            <td>
-                <span class="badge badge-danger rounded-pill d-inline">Neachitat</span>
-            </td>
-            <td>61234567</td>
-            <td>21.10.2022</td>
+            <td th:text="${client.phone}"></td>
+            <td th:text="${client.created}"></td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
@@ -245,43 +191,60 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form th:method="POST" th:object="${client}" th:action="@{/clienti/add}">
                         <div class="form-group">
-                            <label for="nume" class="col-form-label">Nume,prenume</label>
-                            <input type="text" class="form-control" id="nume">
+                            <label for="nume" class="col-form-label">Nume</label>
+                            <input type="text" class="form-control" id="nume" name="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenume" class="col-form-label">Prenume</label>
+                            <input type="text" class="form-control" id="prenume" name="lastName">
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" name="email">
                         </div>
+                        <!-- <div class="product-container" th:object="${product}">
+                            <div class="form-group">
+                                <label for="code" class="col-form-label">Cod Produs</label>
+                                <input type="number" class="form-control" id="code" name="code" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productName" class="col-form-label">Nume Produs</label>
+                                <input type="text" class="form-control" id="productName" name="productName" required>
+                            </div>
+                                <div class="price-container" th:object="${price}">
+                                        <div class="form-group">
+                                             <label for="sum" class="col-form-label">Suma</label>
+                                             <input type="number" class="form-control" id="sum" name="ammount" required>
+                                        </div>
+                                <label>
+                                        <select class="browser-default custom-select" name="currency" required>
+                                            <option value="">Selecteaza Valuta</option>
+                                            <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
+                                                     th:text="${v}"
+                                                        th:value="${v}"/>
+                                        </select>
+                                </label>
+                                </div>
+                        </div>                        -->
                         <label>
-                            <select class="browser-default custom-select">
+                            <select class="browser-default custom-select" name="status">
                                 <option selected>Alegeti Status</option>
-                                <option value="1">Achitat</option>
-                                <option value="2">Neachitat</option>
+                                <option th:each="s : ${T(com.example.botnari_shop.enums.ClientStatus).values()}"
+                                th:text="${s}"
+                                th:value="${s}"/>
                             </select>
                         </label>
                         <div class="form-group">
-                            <label for="cod-produs" class="col-form-label">Cod Produs</label>
-                            <input type="text" class="form-control" id="cod-produs">
-                        </div>
-                        <div class="form-group">
-                            <label for="denumire-produs" class="col-form-label">Denumire Produs</label>
-                            <input type="text" class="form-control" id="denumire-produs">
-                        </div>
-                        <div class="form-group">
                             <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
-                            <input type="text" class="form-control" id="nr-telefon">
+                            <input type="text" class="form-control" id="nr-telefon" name="phone">
                         </div>
-                        <div class="form-group">
-                            <label for="data-inregistrarii" class="col-form-label">Data Inregistrarii</label>
-                            <input type="date" class="form-control" id="data-inregistrarii">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                            <input type="submit" class="btn btn-primary" value="Salveaza"/>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
-                    <button type="button" class="btn btn-primary">Salveaza</button>
                 </div>
             </div>
         </div>

@@ -26,11 +26,11 @@ public class ClientService {
 		clientRepo.findById(id).ifPresent(value -> ref.client = value);
 		return ref.client;
 	}
-	public Client getClientByName(String name) {
+	public Client getClientByFirstNameAndLastName(String firstName, String lastName) {
 		var ref = new Object() {
 			Client client = null;
 			};
-			clientRepo.findByName(name).ifPresent(value -> ref.client = value);
+			clientRepo.findByFirstNameAndLastName(firstName,lastName).ifPresent(value -> ref.client = value);
 			return ref.client;
 	}
 	public Client getClientByEmail(String email) {
@@ -53,5 +53,9 @@ public class ClientService {
 			};
 			clientRepo.findByPhone(phone).ifPresent(value -> ref.client = value);
 			return ref.client;
+	}
+	
+	public void saveClient(Client client) {
+		clientRepo.save(client);
 	}
 }
