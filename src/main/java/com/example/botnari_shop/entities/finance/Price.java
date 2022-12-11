@@ -1,7 +1,5 @@
 package com.example.botnari_shop.entities.finance;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -29,12 +27,6 @@ public class Price extends BaseEntity{
 	@Column(name = "currency")
 	private Currency currency;
 	
-	public Price(int id, LocalDateTime created, LocalDateTime updated, LocalDateTime deleted, String type,
-			Double ammount, Currency currency) {
-		super(id, created, updated, deleted, type);
-		this.ammount = ammount;
-		this.currency = currency;
-	}
 	
 	
 }

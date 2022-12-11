@@ -1,23 +1,27 @@
 package com.example.botnari_shop.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.botnari_shop.entities.Client;
+import com.example.botnari_shop.entities.Item;
 import com.example.botnari_shop.entities.Product;
 import com.example.botnari_shop.entities.finance.Price;
 import com.example.botnari_shop.enums.Category;
 import com.example.botnari_shop.enums.ClientStatus;
 import com.example.botnari_shop.enums.Currency;
 import com.example.botnari_shop.services.ClientService;
+import com.example.botnari_shop.services.ItemService;
 import com.example.botnari_shop.services.ProductService;
 
 @Controller
@@ -29,10 +33,13 @@ public class ClientController extends BaseController<Client>{
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ItemService itemService;
+	
 	@GetMapping("/clienti")
 	public String indexClientsPage(Model model) {
 	     List<Client> clients = clientService.getClientsList();
-		 model.addAttribute("clients",clients);
+ 		 model.addAttribute("clients",clients);
 		return "clienti";
 	}
 	
@@ -65,20 +72,38 @@ public class ClientController extends BaseController<Client>{
 								@RequestParam("firstName") String firstName,
 								@RequestParam("lastName") String lastName,
 								@RequestParam("email") String email,
-//								@RequestParam("code") String code,
-//								@RequestParam("productName") String productName,
-//								@RequestParam("ammount") Double ammount,
-//								@RequestParam("currency") Currency currency,
 								@RequestParam("status") ClientStatus status,
 								@RequestParam("phone") String phone,
 								Model model 
 			                ) throws IOException {
-		
 		try {
-				Client c = new Client(firstName,lastName,email,status,phone);
+			
+			Client c = new Client(firstName,lastName,email,status,phone);
 				clientService.saveClient(c);
 				model.addAttribute("client",c);
-				return "clienti";
+				return "succes_page";
+				
+		}catch(Exception e) {
+			System.err.println("Error >>> "+e);
+			return "error_page";
+		}
+	}
+	
+	@PostMapping("/clienti/add-item")
+	public String addItemToClient(
+								@ModelAttribute Client client,
+								@RequestParam("itemCode") String itemCode,
+								@RequestParam("itemName") String itemName,
+								@RequestParam("itemAmmount") Double itemAmmount,
+								@RequestParam("itemCurrency") Currency itemCurrency,
+								Model model 
+			                ) throws IOException {
+		try {
+			
+			    Item item = new Item(itemCode,itemName,new Price(itemAmmount,itemCurrency));
+				clientService.setItemForClient(item,client);
+				model.addAttribute("item",item);
+				return "succes_page";
 				
 		}catch(Exception e) {
 			System.err.println("Error >>> "+e);

@@ -1,12 +1,10 @@
 package com.example.botnari_shop.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.botnari_shop.entities.Client;
 import com.example.botnari_shop.entities.Product;
 import com.example.botnari_shop.repositories.ProductRepository;
 

@@ -64,6 +64,27 @@
         </div>
     </nav>
 
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+    aria-labelledby="logoutModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="logoutModalLabel">Iesire din cont</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Inchide">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <p>Sigur doriti sa iesiti din cont?</p>
+           </div>
+           <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+               <a href="/logout" class="btn btn-primary">Confirma</a>
+           </div>
+       </div>
+   </div>
+</div>
+
     <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog"
     aria-labelledby="addProductModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -84,7 +105,7 @@
                 </div>
                 <div class="form-group">
                     <label for="productName" class="col-form-label">Nume Produs</label>
-                    <input type="number" class="form-control" id="productName" name="productName" required>
+                    <input type="text" class="form-control" id="productName" name="productName" required>
                 </div>
             <label>
                 <select class="browser-default custom-select" name="category" required>
@@ -157,25 +178,109 @@
                     </div>
                 </div>
             </td>
-            <!-- <td>
-                <p class="fw-normal mb-1" th:text="${client.product.code}"></p>
-                <p class="text-muted mb-0" th:text="${client.product.productName}"></p>
+
+            <td>
+                <div th:each="item : ${client.items}">
+                    <p class="fw-normal mb-1" th:text="${item.itemCode}"></p>
+                    <p class="text-muted mb-0" th:text="${item.itemName}"></p>
+                </div>
             </td>
             <td>
-            	<p class="fw-normal mb-1" th:text="${client.price.ammount}"></p>
-                <p class="text-muted mb-0" th:text="${client.price.currency}"></p>
-            </td> -->
+                <div th:each="item : ${client.items}">
+            	<p class="fw-normal mb-1" th:text="${item.itemPrice.ammount}"></p>
+                <p class="text-muted mb-0" th:text="${item.itemPrice.currency}"></p>
+                </div>
+            </td>
+
             <td>
                 <span class="badge badge-success rounded-pill d-inline" th:text="${client.status}"></span>
             </td>
             <td th:text="${client.phone}"></td>
-            <td th:text="${client.created}"></td>
+            <td th:text="${#temporals.format(client.created, 'dd-MM-yyyy HH:mm')}"></td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">Editeaza</button>
+                    <button type="button" class="btn btn-outline-success" data-toggle="modal" 
+                            data-row="${item}" th:attr="data-target='#adaugaItemModal'+${client.id}">Item</button>
                 </div>
             </td>
+
+            <div th:fragment="modal" class="modal fade" th:id="adaugaItemModal+${client.id}" tabindex="-1" role="dialog"
+            aria-labelledby="itemModalLabel" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h5 class="modal-title" id="itemModalLabel">Adaugare Item</h5>
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                   </div>
+                   <div class="modal-body">
+                       <form th:method="POST" th:object="${item}" th:action="@{/clienti/add-item}">
+                           <div class="item-container">
+                            <div class="form-group">
+                                <label for="clientId" class="col-form-label">ID Client</label>
+                                <input type="number" class="form-control" id="clientId" name="clientId" required
+                                      th:placeholder="${client.id}" th:value="${client.id}">
+                            </div>
+                            <div class="form-group">
+                                <label for="nume" class="col-form-label">Nume</label>
+                                <input type="text" class="form-control" id="nume" name="firstName" 
+                                      th:placeholder="${client.firstName}" th:value="${client.firstName}"> 
+                            </div>
+                            <div class="form-group">
+                                <label for="prenume" class="col-form-label">Prenume</label>
+                                <input type="text" class="form-control" id="prenume" name="lastName" 
+                                       th:placeholder="${client.lastName}" th:value="${client.lastName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       th:placeholder="${client.email}" th:value="${client.email}">
+                            </div>                       
+                            <label>
+                                <select class="browser-default custom-select" name="status">
+                                    <option selected th:text="${client.status}" th:value="${client.status}" th:aria-placeholder="${client.status}"></option>
+                                </select>
+                            </label>
+                            <div class="form-group">
+                                <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
+                                <input type="text" class="form-control" id="nr-telefon" name="phone" th:placeholder="${client.phone}"
+                                        th:value="${client.phone}">
+                            </div>
+                               <div class="form-group">
+                                   <label for="code" class="col-form-label">Cod Produs</label>
+                                   <input type="number" class="form-control" id="code" name="itemCode" required>
+                               </div>
+                               <div class="form-group">
+                                   <label for="itemName" class="col-form-label">Nume Produs</label>
+                                   <input type="text" class="form-control" id="itemName" name="itemName" required>
+                               </div>
+                                   <div class="price-container" th:object="${price}">
+                                           <div class="form-group">
+                                                <label for="sum" class="col-form-label">Suma</label>
+                                                <input type="number" class="form-control" id="sum" name="itemAmmount" required>
+                                           </div>
+                                   <label>
+                                           <select class="browser-default custom-select" name="itemCurrency" required>
+                                               <option value="">Selecteaza Valuta</option>
+                                               <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
+                                                        th:text="${v}"
+                                                           th:value="${v}"/>
+                                           </select>
+                                   </label>
+                                   </div>
+                           </div>            
+                           <div class="modal-footer">
+                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                               <input type="submit" class="btn btn-primary" value="Salveaza"/>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
         </tr>
         </tbody>
     </table>
@@ -203,31 +308,7 @@
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
-                        </div>
-                        <!-- <div class="product-container" th:object="${product}">
-                            <div class="form-group">
-                                <label for="code" class="col-form-label">Cod Produs</label>
-                                <input type="number" class="form-control" id="code" name="code" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="productName" class="col-form-label">Nume Produs</label>
-                                <input type="text" class="form-control" id="productName" name="productName" required>
-                            </div>
-                                <div class="price-container" th:object="${price}">
-                                        <div class="form-group">
-                                             <label for="sum" class="col-form-label">Suma</label>
-                                             <input type="number" class="form-control" id="sum" name="ammount" required>
-                                        </div>
-                                <label>
-                                        <select class="browser-default custom-select" name="currency" required>
-                                            <option value="">Selecteaza Valuta</option>
-                                            <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
-                                                     th:text="${v}"
-                                                        th:value="${v}"/>
-                                        </select>
-                                </label>
-                                </div>
-                        </div>                        -->
+                        </div>                       
                         <label>
                             <select class="browser-default custom-select" name="status">
                                 <option selected>Alegeti Status</option>

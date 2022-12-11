@@ -1,13 +1,10 @@
 package com.example.botnari_shop.entities;
-import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import com.example.botnari_shop.entities.finance.Price;
 import com.example.botnari_shop.enums.Category;

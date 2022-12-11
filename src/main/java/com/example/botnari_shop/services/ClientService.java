@@ -1,13 +1,19 @@
 package com.example.botnari_shop.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import com.example.botnari_shop.entities.Client;
+import com.example.botnari_shop.entities.Item;
 import com.example.botnari_shop.enums.ClientStatus;
 import com.example.botnari_shop.repositories.ClientRepository;
+import com.example.botnari_shop.repositories.ItemRepository;
 
 @Service
 public class ClientService {
@@ -15,8 +21,23 @@ public class ClientService {
 	@Autowired
 	ClientRepository clientRepo;
 	
+	@Autowired
+	ItemRepository itemRepo;
+	
 	public List<Client> getClientsList(){
-		return clientRepo.findAll();
+		List<Client> clients = clientRepo.findAll();
+		return clients;
+	}
+	
+	@Transactional
+	public void setItemForClient(Item item, Client client) {
+		List<Item> list = client.getItems();
+		list.add(item);
+		client.setItems(list);
+		item.setClient(client);
+		itemRepo.save(item);
+		
+//		clientRepo.update(client.getFirstName(),client.getLastName(),client.getEmail(),client.getId());
 	}
 	
 	public Client getClientById(Integer id) {
