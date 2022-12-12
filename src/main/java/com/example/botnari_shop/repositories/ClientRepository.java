@@ -18,9 +18,9 @@ public interface ClientRepository extends JpaRepository<Client,Integer>{
 	public Optional<Client> findByEmail(String email);
 	public Optional<Client> findByStatus(ClientStatus status);
 	public Optional<Client> findByPhone(String phone);
-	
-	@Modifying
-	@Query("update clients c set c.firstName = :firstName, c.lastName = :lastName, c.email = :email where c.id = :id")
-	void update(@Param("firstName") String firstName,@Param("lastName") String lastName,
-			@Param("email") String email,@Param("id") Integer id);
+//	
+//	@Modifying
+//	@Query("update clients c set c.firstName = :firstName, c.lastName = :lastName, c.email = :email where c.id = :id")
+//	void update(@Param("firstName") String firstName,@Param("lastName") String lastName,
+//			@Param("email") String email,@Param("id") Integer id);
 }

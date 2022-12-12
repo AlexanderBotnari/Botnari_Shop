@@ -31,10 +31,18 @@ public class ClientService {
 	
 	@Transactional
 	public void setItemForClient(Item item, Client client) {
+//		Client clientFromDb = getClientById((Integer)client.getId());
 		List<Item> list = client.getItems();
+		System.err.println("Lista inainte");
+		list.forEach(System.err::print);
 		list.add(item);
+		System.err.println("Lista dupa");
+		list.forEach(System.err::print);
 		client.setItems(list);
+		System.err.println();
+		System.err.println("Client "+client.getId());
 		item.setClient(client);
+		System.err.println(item.getItemName());
 		itemRepo.save(item);
 		
 //		clientRepo.update(client.getFirstName(),client.getLastName(),client.getEmail(),client.getId());

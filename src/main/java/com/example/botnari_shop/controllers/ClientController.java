@@ -67,20 +67,42 @@ public class ClientController extends BaseController<Client>{
 		}
 	}
 	
+//	@PostMapping("/clienti/add")
+//	public String addClient(
+//								@RequestParam("firstName") String firstName,
+//								@RequestParam("lastName") String lastName,
+//								@RequestParam("email") String email,
+//								@RequestParam("status") ClientStatus status,
+//								@RequestParam("phone") String phone,
+//								Model model 
+//			                ) throws IOException {
+//		try {
+//			
+//			Client c = new Client(firstName,lastName,email,status,phone);
+//				clientService.saveClient(c);
+//				model.addAttribute("client",c);
+//				return "succes_page";
+//				
+//		}catch(Exception e) {
+//			System.err.println("Error >>> "+e);
+//			return "error_page";
+//		}
+//	}
+	
 	@PostMapping("/clienti/add")
-	public String addClient(
-								@RequestParam("firstName") String firstName,
-								@RequestParam("lastName") String lastName,
-								@RequestParam("email") String email,
-								@RequestParam("status") ClientStatus status,
-								@RequestParam("phone") String phone,
-								Model model 
+	public String addClient(@ModelAttribute Client client,
+							@RequestParam("itemCode") String itemCode,
+							@RequestParam("itemName") String itemName,
+							@RequestParam("itemAmmount") Double itemAmmount,
+							@RequestParam("itemCurrency") Currency itemCurrency,
+							Model model 
 			                ) throws IOException {
 		try {
-			
-			Client c = new Client(firstName,lastName,email,status,phone);
-				clientService.saveClient(c);
-				model.addAttribute("client",c);
+			Item item = new Item(itemCode,itemName,new Price(itemAmmount,itemCurrency));
+				clientService.saveClient(client);
+				clientService.setItemForClient(item,client);
+				model.addAttribute("client",client);
+				model.addAttribute("item",item);
 				return "succes_page";
 				
 		}catch(Exception e) {
@@ -90,18 +112,23 @@ public class ClientController extends BaseController<Client>{
 	}
 	
 	@PostMapping("/clienti/add-item")
-	public String addItemToClient(
-								@ModelAttribute Client client,
-								@RequestParam("itemCode") String itemCode,
-								@RequestParam("itemName") String itemName,
-								@RequestParam("itemAmmount") Double itemAmmount,
-								@RequestParam("itemCurrency") Currency itemCurrency,
-								Model model 
+	public String addItemToClient(@RequestParam("clientId") Integer id,
+								  @RequestParam("firstName") String firstName,
+								  @RequestParam("lastName") String lastName,
+								  @RequestParam("email") String email,
+								  @RequestParam("status") ClientStatus status,
+								  @RequestParam("phone") String phone,
+								  @RequestParam("itemCode") String itemCode,
+								  @RequestParam("itemName") String itemName,
+								  @RequestParam("itemAmmount") Double itemAmmount,
+								  @RequestParam("itemCurrency") Currency itemCurrency,
+								  Model model 
 			                ) throws IOException {
 		try {
-			
+			Client c = new Client(firstName,lastName,email,status,phone);
+			c.setId(id);
 			    Item item = new Item(itemCode,itemName,new Price(itemAmmount,itemCurrency));
-				clientService.setItemForClient(item,client);
+				clientService.setItemForClient(item,c);
 				model.addAttribute("item",item);
 				return "succes_page";
 				

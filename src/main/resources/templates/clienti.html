@@ -157,8 +157,8 @@
     <table class="table align-middle mb-0 bg-white">
         <thead class="bg-light">
         <tr>
-            <th>Numar</th>
-            <th>Nume</th>
+            <th>Nr. Personal</th>
+            <th>Nume/Prenume/Email</th>
             <th>Produs Cumparat</th>
             <th>Suma</th>
             <th>Status</th>
@@ -169,7 +169,7 @@
         </thead>
         <tbody>
         <tr th:each="client : ${clients}">
-            <td><p th:text="${client.id}"></p></td>
+            <td><p th:text="${client.id}" style="text-align: center;"></p></td>
             <td>
                 <div class="d-flex align-items-center">
                     <div class="ms-3">
@@ -321,6 +321,28 @@
                             <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
                             <input type="text" class="form-control" id="nr-telefon" name="phone">
                         </div>
+                        <div class="form-group">
+                            <label for="code" class="col-form-label">Cod Produs</label>
+                            <input type="number" class="form-control" id="code" name="itemCode" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemName" class="col-form-label">Nume Produs</label>
+                            <input type="text" class="form-control" id="itemName" name="itemName" required>
+                        </div>
+                            <div class="price-container" th:object="${price}">
+                                    <div class="form-group">
+                                         <label for="sum" class="col-form-label">Suma</label>
+                                         <input type="number" class="form-control" id="sum" name="itemAmmount" required>
+                                    </div>
+                            <label>
+                                    <select class="browser-default custom-select" name="itemCurrency" required>
+                                        <option value="">Selecteaza Valuta</option>
+                                        <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
+                                                 th:text="${v}"
+                                                    th:value="${v}"/>
+                                    </select>
+                            </label>
+                            </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
                             <input type="submit" class="btn btn-primary" value="Salveaza"/>

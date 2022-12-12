@@ -1,8 +1,5 @@
 package com.example.botnari_shop.entities;
 
-
-import java.time.LocalDateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,7 +26,7 @@ public class Item extends BaseEntity{
 	private String itemName;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Price itemPrice;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
