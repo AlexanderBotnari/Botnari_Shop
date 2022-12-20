@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import com.example.botnari_shop.enums.ClientStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,14 +26,12 @@ public class Client extends BaseEntity{
 	private String email;
 	@OneToMany(mappedBy = "client", cascade = CascadeType.MERGE)
 	private List<Item> items = new ArrayList<>();
-	private ClientStatus status;
 	private String phone;
 	
-	public Client(String firstName, String lastName, String email, ClientStatus status,String phone) {
+	public Client(String firstName, String lastName, String email,String phone) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.status = status;
 		this.phone = phone;
 	}
 	

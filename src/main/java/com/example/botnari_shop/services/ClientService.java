@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 
 import com.example.botnari_shop.entities.Client;
 import com.example.botnari_shop.entities.Item;
-import com.example.botnari_shop.enums.ClientStatus;
 import com.example.botnari_shop.repositories.ClientRepository;
 import com.example.botnari_shop.repositories.ItemRepository;
 
@@ -69,13 +68,13 @@ public class ClientService {
 			clientRepo.findByEmail(email).ifPresent(value -> ref.client = value);
 			return ref.client;
 	}
-	public Client getClientByStatus(ClientStatus status) {
-		var ref = new Object() {
-			Client client = null;
-			};
-			clientRepo.findByStatus(status).ifPresent(value -> ref.client = value);
-			return ref.client;
-	}
+//	public Client getClientByStatus(ClientStatus status) {
+//		var ref = new Object() {
+//			Client client = null;
+//			};
+//			clientRepo.findByStatus(status).ifPresent(value -> ref.client = value);
+//			return ref.client;
+//	}
 	public Client getClientByPhone(String phone) {
 		var ref = new Object() {
 			Client client = null;

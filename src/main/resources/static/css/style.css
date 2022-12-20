@@ -253,3 +253,22 @@ margin-left: 4px;
 .logout-button{
     padding-left: 20px;
 }
+.item-container{
+    border-bottom: 1px ridge gray;
+    text-align: center;
+}
+.item-status{
+    height: 52px;
+    width: 106px;
+    border: none;
+    text-align: unset;
+}
+.item-date{
+    width: 175px;
+    height: 52px;
+    border: none;
+    text-align: unset;
+}
+.btn-group-item{
+    margin-top: 10px;
+}

@@ -1,5 +1,5 @@
 package com.example.botnari_shop.enums;
 
-public enum ClientStatus {
+public enum ItemStatus {
 	ACHITAT,NEACHITAT
 }

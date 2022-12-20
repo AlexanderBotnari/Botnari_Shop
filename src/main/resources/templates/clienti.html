@@ -12,6 +12,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -159,12 +162,13 @@
         <tr>
             <th>Nr. Personal</th>
             <th>Nume/Prenume/Email</th>
+            <th>Nr de telefon</th>
             <th>Produs Cumparat</th>
             <th>Suma</th>
             <th>Status</th>
-            <th>Nr de telefon</th>
             <th>Data Inregistrarii</th>
-            <th>Actiune</th>
+            <th>Actiune Item</th>
+            <th>Actiune Client</th>
         </tr>
         </thead>
         <tbody>
@@ -178,25 +182,49 @@
                     </div>
                 </div>
             </td>
-
+            
+            <td th:text="${client.phone}"></td>
+            
             <td>
-                <div th:each="item : ${client.items}">
+                <div th:each="item : ${client.items}" class="item-container">
                     <p class="fw-normal mb-1" th:text="${item.itemCode}"></p>
                     <p class="text-muted mb-0" th:text="${item.itemName}"></p>
                 </div>
             </td>
             <td>
-                <div th:each="item : ${client.items}">
+                <div th:each="item : ${client.items}" class="item-container">
             	<p class="fw-normal mb-1" th:text="${item.itemPrice.ammount}"></p>
                 <p class="text-muted mb-0" th:text="${item.itemPrice.currency}"></p>
                 </div>
             </td>
+            <td>
+                <div th:each="item : ${client.items}" class="item-container item-status">
+                <span 
+                      th:text="${item.status}"
+                      th:classappend="${response == 'achitat'} ? 'badge badge-success rounded-pill d-inline' : 
+                                        'badge badge-danger rounded-pill d-inline'">
+                </span>
+                </div>
+            </td>
+            <td>
+                <div th:each="item : ${client.items}" class="item-container item-date">
+                    <p th:text="${#temporals.format(item.created, 'dd-MM-yyyy HH:mm')}"></p>
+                </div>
+            </td>
 
             <td>
-                <span class="badge badge-success rounded-pill d-inline" th:text="${client.status}"></span>
+                <div th:each="item : ${client.items}">
+                    <div class="btn-group btn-group-item" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+                </div>
             </td>
-            <td th:text="${client.phone}"></td>
-            <td th:text="${#temporals.format(client.created, 'dd-MM-yyyy HH:mm')}"></td>
+
             <td>
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
@@ -241,7 +269,10 @@
                             </div>                       
                             <label>
                                 <select class="browser-default custom-select" name="status">
-                                    <option selected th:text="${client.status}" th:value="${client.status}" th:aria-placeholder="${client.status}"></option>
+                                    <option value="">Selecteaza Status</option>
+                                               <option th:each="v : ${T(com.example.botnari_shop.enums.ItemStatus).values()}"
+                                                        th:text="${v}"
+                                                        th:value="${v}"/>
                                 </select>
                             </label>
                             <div class="form-group">
@@ -308,20 +339,12 @@
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email">
-                        </div>                       
-                        <label>
-                            <select class="browser-default custom-select" name="status">
-                                <option selected>Alegeti Status</option>
-                                <option th:each="s : ${T(com.example.botnari_shop.enums.ClientStatus).values()}"
-                                th:text="${s}"
-                                th:value="${s}"/>
-                            </select>
-                        </label>
+                        </div>
                         <div class="form-group">
                             <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
                             <input type="text" class="form-control" id="nr-telefon" name="phone">
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="code" class="col-form-label">Cod Produs</label>
                             <input type="number" class="form-control" id="code" name="itemCode" required>
                         </div>
@@ -341,7 +364,7 @@
                                                  th:text="${v}"
                                                     th:value="${v}"/>
                                     </select>
-                            </label>
+                            </label> -->
                             </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>

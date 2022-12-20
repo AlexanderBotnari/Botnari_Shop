@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.example.botnari_shop.entities.finance.Price;
+import com.example.botnari_shop.enums.ItemStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,14 +27,16 @@ public class Item extends BaseEntity{
 	private String itemName;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Price itemPrice;
+	private ItemStatus status;
 	@ManyToOne()
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	public Item( String itemCode, String itemName, Price itemPrice) {
+	public Item( String itemCode, String itemName, Price itemPrice, ItemStatus status) {
 		this.itemCode = itemCode;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
+		this.status = status;
 	}
 	
 	

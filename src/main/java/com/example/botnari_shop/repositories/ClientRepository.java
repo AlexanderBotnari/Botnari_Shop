@@ -9,14 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.botnari_shop.entities.Client;
-import com.example.botnari_shop.enums.ClientStatus;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Integer>{
 
 	public Optional<Client> findByFirstNameAndLastName(String firstName, String lastName);
 	public Optional<Client> findByEmail(String email);
-	public Optional<Client> findByStatus(ClientStatus status);
+//	public Optional<Client> findByStatus(ClientStatus status);
 	public Optional<Client> findByPhone(String phone);
 //	
 //	@Modifying
