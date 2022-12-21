@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,15 +39,6 @@ public class ClientController extends BaseController<Client>{
 	@GetMapping("/clienti")
 	public String indexClientsPage(Model model) {
 	     List<Client> clients = clientService.getClientsList();
-	     for (Client client : clients) {
-			for (Item item : client.getItems()) {
-				if(item.getStatus() == ItemStatus.ACHITAT) {
-					model.addAttribute("response", "achitat");
-				}else {
-					model.addAttribute("response", "neachitat");
-				}
-			}
-		}
   		 model.addAttribute("clients",clients);
 		return "clienti";
 	}
@@ -117,4 +109,10 @@ public class ClientController extends BaseController<Client>{
 		}
 	}
 	
+	@RequestMapping("/clienti/delete")
+	public String deleteItem(@RequestParam("itemId") Integer itemId) {
+		Item item = itemService.findById(itemId).get();
+		itemService.deleteItem(item);
+		return "succes_page";
+	}
 }

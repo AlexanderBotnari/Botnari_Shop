@@ -201,8 +201,8 @@
                 <div th:each="item : ${client.items}" class="item-container item-status">
                 <span 
                       th:text="${item.status}"
-                      th:classappend="${response == 'achitat'} ? 'badge badge-success rounded-pill d-inline' : 
-                                        'badge badge-danger rounded-pill d-inline'">
+                      class="badge rounded-pill d-inline"
+                      >                     
                 </span>
                 </div>
             </td>
@@ -215,20 +215,53 @@
             <td>
                 <div th:each="item : ${client.items}">
                     <div class="btn-group btn-group-item" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                            data-row="${item}" th:attr="data-target='#stergeItemModal'+${item.id}">
                         <i class="fa fa-trash"></i>
                     </button>
                     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </button>
+
+                    <div th:fragment="modal" class="modal fade" th:id="stergeItemModal+${item.id}" tabindex="-1" role="dialog"
+                    aria-labelledby="stergeItemModalLabel" aria-hidden="true">
+                   <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <h5 class="modal-title" id="itemModalLabel">Eliminare Item</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                               <form th:method="POST" th:action="@{/clienti/delete}">
+                                   <div class="item-container">
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control" name="itemId" 
+                                                    th:value="${item.id}"> 
+                                        </div>
+                                        <p>Sigur doriti sa eliminati elementul?</p>
+                                   </div>            
+                                   <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                                       <input type="submit" class="btn btn-danger" value="Elimina"/>
+                                   </div>
+                               </form>
+                           </div>
+                       </div>
+                   </div>
+                    </div>
+
                 </div>
                 </div>
             </td>
 
             <td>
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#adaugaClientModal">Editeaza</button>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" 
+                            data-row="${item}" th:attr="data-target='#stergeClientModal'+${client.id}">Sterge</button>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" 
+                            data-row="${item}" th:attr="data-target='#editClientModal'+${client.id}">Editeaza</button>
                     <button type="button" class="btn btn-outline-success" data-toggle="modal" 
                             data-row="${item}" th:attr="data-target='#adaugaItemModal'+${client.id}">Item</button>
                 </div>
@@ -247,48 +280,48 @@
                    <div class="modal-body">
                        <form th:method="POST" th:object="${item}" th:action="@{/clienti/add-item}">
                            <div class="item-container">
-                            <div class="form-group">
-                                <label for="clientId" class="col-form-label">ID Client</label>
-                                <input type="number" class="form-control" id="clientId" name="clientId" required
-                                      th:placeholder="${client.id}" th:value="${client.id}">
-                            </div>
-                            <div class="form-group">
-                                <label for="nume" class="col-form-label">Nume</label>
-                                <input type="text" class="form-control" id="nume" name="firstName" 
-                                      th:placeholder="${client.firstName}" th:value="${client.firstName}"> 
-                            </div>
-                            <div class="form-group">
-                                <label for="prenume" class="col-form-label">Prenume</label>
-                                <input type="text" class="form-control" id="prenume" name="lastName" 
-                                       th:placeholder="${client.lastName}" th:value="${client.lastName}">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="col-form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       th:placeholder="${client.email}" th:value="${client.email}">
-                            </div>                       
-                            <label>
-                                <select class="browser-default custom-select" name="status">
-                                    <option value="">Selecteaza Status</option>
-                                               <option th:each="v : ${T(com.example.botnari_shop.enums.ItemStatus).values()}"
-                                                        th:text="${v}"
-                                                        th:value="${v}"/>
-                                </select>
-                            </label>
-                            <div class="form-group">
-                                <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
-                                <input type="text" class="form-control" id="nr-telefon" name="phone" th:placeholder="${client.phone}"
-                                        th:value="${client.phone}">
-                            </div>
-                               <div class="form-group">
-                                   <label for="code" class="col-form-label">Cod Produs</label>
-                                   <input type="number" class="form-control" id="code" name="itemCode" required>
+                                <div class="form-group">
+                                    <label for="clientId" class="col-form-label">ID Client</label>
+                                    <input type="number" class="form-control" id="clientId" name="clientId"
+                                        th:placeholder="${client.id}" th:value="${client.id}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nume" class="col-form-label">Nume</label>
+                                    <input type="text" class="form-control" id="nume" name="firstName" 
+                                        th:placeholder="${client.firstName}" th:value="${client.firstName}"> 
+                                </div>
+                                <div class="form-group">
+                                    <label for="prenume" class="col-form-label">Prenume</label>
+                                    <input type="text" class="form-control" id="prenume" name="lastName" 
+                                        th:placeholder="${client.lastName}" th:value="${client.lastName}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" 
+                                        th:placeholder="${client.email}" th:value="${client.email}">
+                                </div>                       
+                                <div class="form-group">
+                                    <label for="nr-telefon" class="col-form-label">Numar de telefon</label>
+                                    <input type="text" class="form-control" id="nr-telefon" name="phone" 
+                                            th:placeholder="${client.phone}" th:value="${client.phone}">
+                                </div>
+                                <label>
+                                    <select class="browser-default custom-select" name="status">
+                                        <option value="">Selecteaza Status</option>
+                                                <option th:each="v : ${T(com.example.botnari_shop.enums.ItemStatus).values()}"
+                                                            th:text="${v}"
+                                                            th:value="${v}"/>
+                                    </select>
+                                </label>
+                                <div class="form-group">
+                                    <label for="code" class="col-form-label">Cod Produs</label>
+                                    <input type="number" class="form-control" id="code" name="itemCode" required>
                                </div>
                                <div class="form-group">
                                    <label for="itemName" class="col-form-label">Nume Produs</label>
                                    <input type="text" class="form-control" id="itemName" name="itemName" required>
                                </div>
-                                   <div class="price-container" th:object="${price}">
+                                   <div class="price-contai\ner" th:object="${price}">
                                            <div class="form-group">
                                                 <label for="sum" class="col-form-label">Suma</label>
                                                 <input type="number" class="form-control" id="sum" name="itemAmmount" required>
@@ -311,7 +344,9 @@
                    </div>
                </div>
            </div>
-       </div>
+            </div>
+
+            </div>
         </tr>
         </tbody>
     </table>
