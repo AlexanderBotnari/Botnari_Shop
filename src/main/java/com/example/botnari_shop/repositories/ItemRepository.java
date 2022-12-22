@@ -7,5 +7,5 @@ import com.example.botnari_shop.entities.Item;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-
+	
 }

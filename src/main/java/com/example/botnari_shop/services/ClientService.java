@@ -67,4 +67,10 @@ public class ClientService {
 	public void saveClient(Client client) {
 		clientRepo.save(client);
 	}
+
+	@Transactional
+	public void deleteClient(Client client) {
+		clientRepo.delete(client);
+	}
+	
 }

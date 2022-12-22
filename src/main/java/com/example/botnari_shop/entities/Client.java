@@ -24,7 +24,7 @@ public class Client extends BaseEntity{
 	private String firstName;
 	private String lastName;
 	private String email;
-	@OneToMany(mappedBy = "client", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "client", cascade = CascadeType.MERGE, orphanRemoval = true)
 	private List<Item> items = new ArrayList<>();
 	private String phone;
 	

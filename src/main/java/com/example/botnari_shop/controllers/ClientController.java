@@ -82,6 +82,27 @@ public class ClientController extends BaseController<Client>{
 		}
 	}
 	
+	@RequestMapping("/clienti/edit-client")
+	public String editClient(@RequestParam("id") Integer id,
+							 @RequestParam("firstName") String firstName,
+							 @RequestParam("lastName") String lastName,
+							 @RequestParam("email") String email,
+							 @RequestParam("phone") String phone
+							) {
+		Client client = clientService.getClientById(id);
+		client.setFirstName(firstName);client.setLastName(lastName);
+		client.setEmail(email);client.setPhone(phone);
+		clientService.saveClient(client);
+		return "succes_page";
+	}
+	
+	@RequestMapping("/clienti/delete-client")
+	public String removeClient(@RequestParam("id") Integer id) {
+		Client client = clientService.getClientById(id);
+		clientService.deleteClient(client);
+		return "succes_page";
+	}
+	
 	@PostMapping("/clienti/add-item")
 	public String addItemToClient(@RequestParam("clientId") Integer id,
 								  @RequestParam("firstName") String firstName,
@@ -109,10 +130,26 @@ public class ClientController extends BaseController<Client>{
 		}
 	}
 	
-	@RequestMapping("/clienti/delete")
-	public String deleteItem(@RequestParam("itemId") Integer itemId) {
+	@RequestMapping("/clienti/delete-item")
+	public String removeItem(@RequestParam("itemId") Integer itemId) {
 		Item item = itemService.findById(itemId).get();
 		itemService.deleteItem(item);
+		return "succes_page";
+	}
+	
+	@RequestMapping("/clienti/update-item")
+	public String editItem(@RequestParam("itemId") Integer itemId,
+							 @RequestParam("itemCode") String itemCode,
+							 @RequestParam("itemName") String itemName,
+							 @RequestParam("itemAmmount") Double itemAmmount,
+							 @RequestParam("itemCurrency") Currency itemCurrency,
+							 @RequestParam("status") ItemStatus status
+							) {
+		Item item = itemService.findById(itemId).get();
+		item.setItemCode(itemCode);item.setItemName(itemName);
+		item.setItemPrice(new Price(itemAmmount,itemCurrency));
+		item.setStatus(status);
+		itemService.saveItem(item);
 		return "succes_page";
 	}
 }
