@@ -272,3 +272,7 @@ margin-left: 4px;
 .btn-group-item{
     margin-top: 10px;
 }
+/* download image */
+.download-img-btn{
+    padding-right: 350px;
+}

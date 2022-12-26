@@ -12,6 +12,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/font-awesome.min.css">
+        <script src="https://kit.fontawesome.com/42d48049d7.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -161,9 +165,22 @@
                     <p class="card-category" th:text="${product.category}"></p>
                     <p class="card-category" th:text="${product.price.ammount} +' '+ ${product.price.currency}"></p>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#stergeModal">Sterge</button>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adaugaModal">Editeaza</button>
-                        <button class="btn btn-success" data-toggle="modal" data-row="${product}" th:attr="data-target='#vizualizeazaModal'+${product.id}">Vizualizeaza</button> 
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-row="${product}" th:attr="data-target='#stergeModal'+${product.id}"
+                                title="Sterge Produs">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-row="${product}" th:attr="data-target='#editModal'+${product.id}"
+                                title="Editeaza Produs">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-success" data-toggle="modal" data-row="${product}" th:attr="data-target='#vizualizeazaModal'+${product.id}"
+                                title="Vezi Imaginea">
+                            <i class="fa-sharp fa-solid fa-eye"></i>
+                        </button>
+                        <button class="btn btn-warning" data-toggle="modal" data-row="${product}" th:attr="data-target='#editImageModal'+${product.id}"
+                                title="Schimba Imaginea">
+                            <i class="fa-regular fa-file-image"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- Show modal -->
@@ -181,56 +198,152 @@
                                         <img th:src="@{'product/image/' + ${product.id}}" class="vizualizeaza-modal-img" alt="pic">
                                  </div>
                     <div class="modal-footer">
+                        <div class="download-img-btn">
+                            <a th:href="@{'/product/download?id=' + ${product.id}}"><i class="fa-solid fa-download"></i></a>
+                        </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
                     </div>
                     </div>
                 </div>
                 </div>
                 <!-- Show Modal -->
+
+                <!-- edit modal -->
+                <div th:fragment="modal"  th:id="editModal+${product.id}" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                             <h5 class="modal-title" id="editModalLabel">Editare produs</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                         <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:method="POST" th:action="@{/produse/edit-product}" th:object="${product}" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="productId" name="id" th:value="${product.id}">
+                                            </div>
+                                            <!-- <div class="form-group">
+                                                <div class="holder">
+                                                    <img class="upload-img" id="photoEditPreview" th:src="@{'product/image/' + ${product.id}}" alt="pic" />
+                                                </div>
+                                                <input class="upload-input" type="file" name="image" id="photoEdit" accept="image/x-png,image/jpeg,image/jpg" required/>
+                                            </div> -->
+                                            <div class="form-group">
+                                                <label for="productName1" class="col-form-label">Nume Produs</label>
+                                                <input type="text" class="form-control" id="productName1" name="productName" required
+                                                        th:placeholder="${product.productName}" th:value="${product.productName}">
+                                            </div>
+                                        <label>
+                                            <select class="browser-default custom-select" name="category" required>
+                                                <option th:text="${product.category}" th:value="${product.category}"></option>
+                                                <option th:each="c : ${T(com.example.botnari_shop.enums.Category).values()}"
+                                                        th:text="${c}"
+                                                        th:value="${c}"/>
+                                            </select>
+                                        </label>
+                                        <div class="form-group">
+                                            <label for="cod1" class="col-form-label">Cod</label>
+                                            <input type="number" class="form-control" id="cod1" name="code" required 
+                                                    th:placeholder="${product.code}" th:value="${product.code}">
+                                        </div>
+                            
+                                        <div class="price-container" th:object="${price}">
+                                        <div class="form-group">
+                                            <label for="pret1" class="col-form-label">Pret</label>
+                                            <input type="number" class="form-control" id="pret1" name="ammount" required 
+                                                    th:placeholder="${product.price.ammount}" th:value="${product.price.ammount}">
+                                        </div>
+                                        <label>
+                                            <select class="browser-default custom-select" name="currency" required>
+                                                <option th:text="${product.price.currency}" th:value="${product.price.currency}"></option>
+                                                <option th:each="v : ${T(com.example.botnari_shop.enums.Currency).values()}"
+                                                        th:text="${v}"
+                                                        th:value="${v}"/>
+                                            </select>
+                                        </label>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="detalii1" class="col-form-label">Detalii Produs</label>
+                                            <textarea class="form-control" id="detalii1" name="description"
+                                                        th:placeholder="${product.description}" th:text="${product.description}"></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                                            <input type="submit" class="btn btn-primary" value="Salveaza"/>
+                                        </div> 
+                                        </form>
+                                       </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- edit Modal -->
+
+                <!-- edit image modal -->
+                <div th:fragment="modal"  th:id="editImageModal+${product.id}" class="modal fade" tabindex="-1" role="dialog"
+                                aria-labelledby="editImageModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                             <h5 class="modal-title" id="editImageModalLabel">Editare produs</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                         <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:method="POST" th:action="@{/produse/edit-product-image}" th:object="${product}" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <input type="hidden" class="form-control" id="imageId" name="id" th:value="${product.id}">
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="holder">
+                                                    <img class="upload-img" id="photoEditPreview" th:src="@{'product/image/' + ${product.id}}" alt="pic" />
+                                                </div>
+                                                <input class="upload-input" type="file" name="image" id="photoEdit" accept="image/x-png,image/jpeg,image/jpg" required/>
+                                            </div>                           
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                                            <input type="submit" class="btn btn-primary" value="Salveaza"/>
+                                        </div> 
+                                        </form>
+                                       </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- edit image Modal -->
+
+                <!-- delete modal -->
+                <div th:fragment="modal"  th:id="stergeModal+${product.id}" class="modal fade" id="stergeModal" tabindex="-1" role="dialog"
+                aria-labelledby="stergeModalLabel" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <h5 class="modal-title" id="stergeModalLabel">Stergere inregistrare</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                           </button>
+                       </div>
+                       <div class="modal-body">
+                           <form th:method="POST" th:action="@{/produse/delete-product}" th:object="${product}">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" name="id" th:value="${product.id}">
+                            </div> 
+                            <p>Sigur doriti sa stergeti inregistrarea? Daca "DA" ,apasati butonul OK!</p>                      
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
+                            <input type="submit" class="btn btn-primary" value="Salveaza"/>
+                        </div> 
+                        </form>
+                       </div>
+                   </div>
+               </div>
+                </div>
+                <!-- delete modal -->
             </div>
         </li>
     </ul>
-    
-    <div class="modal fade" id="stergeModal" tabindex="-1" role="dialog"
-         aria-labelledby="stergeModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="stergeModalLabel">Stergere inregistrare</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Sigur doriti sa stergeti inregistrarea? Daca "DA" ,apasati butonul OK!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Inchide</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#stergeAlertModal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="stergeAlertModal" tabindex="-1" role="dialog"
-         aria-labelledby="stergeAlertModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="stergeAlertModalLabel">Stergere inregistrare</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Inregisrarea a fost eliminata!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </main>
 </body>

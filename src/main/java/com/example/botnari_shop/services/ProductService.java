@@ -66,8 +66,8 @@ public class ProductService {
 //		return ref.products;
 //	}
 	
-	public void deleteProductByCode(String code) {
-		productRepo.deleteProductByCode(code);
+	public void deleteProduct(Product product) {
+		productRepo.delete(product);;
 	}
 	
 	public void saveProduct(Product product) {
