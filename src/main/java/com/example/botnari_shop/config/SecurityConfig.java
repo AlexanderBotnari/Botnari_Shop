@@ -50,36 +50,26 @@ public class SecurityConfig{
         
         http 
             .authorizeRequests()
-//            .antMatchers("/js/**","/html/**","/","/produse","/clienti","/succes_add_product","/users")
-//            .authenticated()
-//            .access("hasRole('ROLE_ADMIN')")
-//            .hasRole("ADMIN")
-            .antMatchers("/js/**","/html/**","/","/clienti","/succes_add_product")
-            .hasRole("USER")
+            .antMatchers("/js/**","/html/**","/","/produse","/clienti","/succes_add_product","/users")
+            .hasAuthority("ADMIN")
+//            .antMatchers("/js/**","/html/**","/","/clienti","/succes_add_product")
+//            .hasAuthority("USER")
             .and();
         
-//        http 
-//        .authorizeRequests()
-//        .antMatchers("/js/**","/html/**","/","/clienti","/succes_add_product")
-//        .hasRole("USER")
-//        .and();
+        http 
+        .authorizeRequests()
+        .antMatchers("/js/**","/html/**","/","/clienti","/succes_add_product")
+        .hasAnyAuthority("USER","ADMIN")
+        .and();
         
         return http.build();
    }
  
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//    	List<User> users = userService.getUsers();
-//    	
-//    	for (User user : users) {
-//
-//            auth
-//                    .inMemoryAuthentication()
-//                    .withUser(user.getUserPhone()).password("{noop}"+user.getPassword())
-//                    .roles(user.getUserRole().name());
-//		}
-    	BCryptPasswordEncoder b_encoder = new BCryptPasswordEncoder();
-    	System.err.println(b_encoder.encode("admin"));
+
+//    	BCryptPasswordEncoder b_encoder = new BCryptPasswordEncoder();
+//    	System.err.println(b_encoder.encode("admin"));
     	auth.userDetailsService(userService).passwordEncoder(encoder());
     }
 

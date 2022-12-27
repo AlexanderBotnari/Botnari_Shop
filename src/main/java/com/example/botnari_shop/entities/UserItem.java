@@ -2,7 +2,8 @@ package com.example.botnari_shop.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,8 +28,15 @@ public class UserItem implements UserDetails{
 	}
 
 	@Override
-    public Collection<GrantedAuthority> getAuthorities() {		
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+    public Collection<? extends GrantedAuthority> getAuthorities() {		
+		Set<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+         
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+         
+        return authorities;
     }
 
     @Override

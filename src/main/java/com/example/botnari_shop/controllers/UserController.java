@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.botnari_shop.entities.User;
-import com.example.botnari_shop.enums.Role;
 import com.example.botnari_shop.services.UserService;
 
 @Controller
@@ -32,10 +31,10 @@ public class UserController extends BaseController<User> {
 						  @RequestParam("userEmail") String userEmail,
 						  @RequestParam("userPhone") String userPhone,
 						  @RequestParam("password") String password,
-						  @RequestParam("userRole") Role userRole,
+//						  @RequestParam("userRole") String userRole,
 						  Model model
 						) {
-			User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,password,userRole);
+			User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,password);
 			userService.saveUser(user);
 			model.addAttribute("user",user);
 		return "succes_page";
@@ -54,7 +53,7 @@ public class UserController extends BaseController<User> {
 						   @RequestParam("userLastName") String userLastName,
 						   @RequestParam("userEmail") String userEmail,
 						   @RequestParam("userPhone") String userPhone,
-						   @RequestParam("userRole") Role userRole,
+//						   @RequestParam("userRole") Role userRole,
 						   Model model
 							) {
 			User user = userService.getUserById(userId).get();
@@ -62,7 +61,7 @@ public class UserController extends BaseController<User> {
 			user.setUserLastName(userLastName);
 			user.setUserEmail(userEmail);
 			user.setPhone(userPhone);
-			user.setUserRole(userRole);
+//			user.setUserRole(userRole);
 			
 			userService.saveUser(user);
 		return "succes_page";
