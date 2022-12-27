@@ -11,4 +11,5 @@ import com.example.botnari_shop.entities.User;
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	public Optional<User> findByPhone(String phone);
+	public Optional<User> findByUserName(String userName);
 }

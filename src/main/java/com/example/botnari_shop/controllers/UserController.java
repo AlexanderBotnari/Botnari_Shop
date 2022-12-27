@@ -26,7 +26,8 @@ public class UserController extends BaseController<User> {
 	}
 	
 	@RequestMapping("/users/add")
-	public String addUser(@RequestParam("userFirstName") String userFirstName,
+	public String addUser(@RequestParam("userName") String userName,
+						  @RequestParam("userFirstName") String userFirstName,
 						  @RequestParam("userLastName") String userLastName,
 						  @RequestParam("userEmail") String userEmail,
 						  @RequestParam("userPhone") String userPhone,
@@ -34,7 +35,7 @@ public class UserController extends BaseController<User> {
 						  @RequestParam("userRole") Role userRole,
 						  Model model
 						) {
-			User user = new User(userFirstName,userLastName,userEmail,userPhone,password,userRole);
+			User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,password,userRole);
 			userService.saveUser(user);
 			model.addAttribute("user",user);
 		return "succes_page";
@@ -60,7 +61,7 @@ public class UserController extends BaseController<User> {
 			user.setUserFirstName(userFirstName);
 			user.setUserLastName(userLastName);
 			user.setUserEmail(userEmail);
-			user.setUserPhone(userPhone);
+			user.setPhone(userPhone);
 			user.setUserRole(userRole);
 			
 			userService.saveUser(user);
