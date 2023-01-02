@@ -3,12 +3,15 @@ package com.example.botnari_shop.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.botnari_shop.entities.Role;
 import com.example.botnari_shop.entities.User;
+import com.example.botnari_shop.enums.UserRoles;
 import com.example.botnari_shop.services.UserService;
 
 @Controller
@@ -17,7 +20,31 @@ public class UserController extends BaseController<User> {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping("/users")
+	@RequestMapping("/users/initialize")
+	public String initializeAdminCredentials(@RequestParam("userName") String userName,
+											 @RequestParam("userFirstName") String userFirstName,
+											 @RequestParam("userLastName") String userLastName,
+											 @RequestParam("userEmail") String userEmail,
+											 @RequestParam("userPhone") String userPhone,
+											 @RequestParam("password") String password,
+											 @RequestParam("confirmPassword") String confirmPassword,
+											 Model model
+											) {
+					if(password.equals(confirmPassword)) {
+						BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+						User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,encoder.encode(password));
+						user.setRole(new Role("ADMIN"));
+						
+						userService.saveUser(user);
+						model.addAttribute("user",user);
+						return "index";
+					}else {
+						model.addAttribute("passwordConfirmError","Parola initiala cu cea de confirmare se difera!");
+						return "initialize_admin";
+					}	
+	}
+	
+	@RequestMapping("/utilizatori")
 	public String indexUsers(Model model) {
 		List<User> users = userService.getUsers();
 		model.addAttribute("users",users);
@@ -31,13 +58,22 @@ public class UserController extends BaseController<User> {
 						  @RequestParam("userEmail") String userEmail,
 						  @RequestParam("userPhone") String userPhone,
 						  @RequestParam("password") String password,
-//						  @RequestParam("userRole") String userRole,
+						  @RequestParam("confirmPassword") String confirmPassword,
+						  @RequestParam("role") UserRoles role,
 						  Model model
 						) {
-			User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,password);
+		if(password.equals(confirmPassword)) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			User user = new User(userName,userFirstName,userLastName,userEmail,userPhone,encoder.encode(password));
+			user.setRole(new Role(role.name()));
+			
 			userService.saveUser(user);
 			model.addAttribute("user",user);
-		return "succes_page";
+			return "succes_page";
+		}else {
+			model.addAttribute("passwordConfirmError","Parola initiala cu cea de confirmare se difera!");
+			return "error_page";
+		}
 	}
 
 	@RequestMapping("/users/remove")
@@ -67,9 +103,4 @@ public class UserController extends BaseController<User> {
 		return "succes_page";
 	}
 
-	@RequestMapping("/users/details")
-	public void viewDetails(@RequestParam("userId") Integer userId, Model model) {
-		User userDetails = userService.getUserById(userId).get();
-		model.addAttribute("userDetails",userDetails);
-	}
 }

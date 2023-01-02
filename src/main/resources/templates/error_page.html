@@ -15,8 +15,10 @@
         <div class="overlay"></div>
             <div class="terminal">
                 <h1>Error</h1>
+                <div th:if="${passwordConfirmError}" th:text="${passwordConfirmError}" class="alert alert-danger">
+                </div>
                 <p class="output">Operatiune indisponibila.</p>
-                <p class="output">Va rugam sa incercati din nou de la <a href="/">Pagina Principala</a>.</p>
+                <p class="output">Incercati din nou <a href="#" onclick="javascript:window.history.back(-1);return false;">Inapoi</a>.</p>
                 <p class="output">Succese.</p>
 
     </div>

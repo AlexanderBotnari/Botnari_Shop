@@ -1,13 +1,8 @@
 package com.example.botnari_shop.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +26,10 @@ public class User extends BaseEntity{
 	private String userEmail;
 	private String phone;
 	private String password;
-	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
+	@OneToOne(cascade = CascadeType.ALL)
+	private Role role;
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private Set<Role> roles = new HashSet<>();
 	
 	public User(String userName, String userFirstName, String userLastName, String userEmail,
 			String phone, String password) {

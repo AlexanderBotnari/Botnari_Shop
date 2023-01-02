@@ -276,3 +276,14 @@ margin-left: 4px;
 .download-img-btn{
     padding-right: 350px;
 }
+/* user account */
+.user-account{
+    color: white;
+    font-size: small;
+    border-bottom: 1px solid white;
+    margin-bottom: 10px ;
+}
+.user-account:hover{
+    color: darkred;
+    border-bottom: 1px solid darkred;
+}

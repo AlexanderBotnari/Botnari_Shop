@@ -3,7 +3,6 @@ package com.example.botnari_shop.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,9 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserItem implements UserDetails{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private User user;
 
@@ -29,12 +25,10 @@ public class UserItem implements UserDetails{
 
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {		
-		Set<Role> roles = user.getRoles();
+		Role role = user.getRole();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
          
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
+        authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
          
         return authorities;
     }

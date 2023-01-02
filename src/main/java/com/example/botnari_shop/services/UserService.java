@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.example.botnari_shop.entities.User;
 import com.example.botnari_shop.entities.UserItem;
 import com.example.botnari_shop.repositories.UserRepository;
@@ -47,7 +46,6 @@ public class UserService implements UserDetailsService{
             throw new UsernameNotFoundException(username);
         }
 		
-		System.err.println(user.getRoles());
         return new UserItem(user);
 	}
 }
